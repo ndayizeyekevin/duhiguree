@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members - DUHIGURE MU MIRYANGO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .navbar {
+            background: linear-gradient(135deg, #1b5e20 0%, #4caf50 100%);
+        }
+        .btn-primary {
+            background-color: #4caf50;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #1b5e20;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: none;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #4caf50 0%, #1b5e20 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+        .member-card {
+            transition: transform 0.2s;
+            border-left: 4px solid #4caf50;
+        }
+        .member-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .modal-header {
+            background: linear-gradient(135deg, #4caf50 0%, #1b5e20 100%);
+            color: white;
+        }
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="fas fa-users me-2"></i>DUHIGURE MU MIRYANGO
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="system.html">
+                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="families.html">
+                            <i class="fas fa-home me-1"></i>Families
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="members.html">
+                            <i class="fas fa-users me-1"></i>Members
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reports.html">
+                            <i class="fas fa-chart-bar me-1"></i>Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="settings.html">
+                            <i class="fas fa-cog me-1"></i>Settings
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle me-1"></i><span id="currentUserName">User</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="profile.html">
+                                <i class="fas fa-user me-2"></i>My Profile
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" onclick="logout()">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="toast-container"></div>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold">
+                    <i class="fas fa-users me-2"></i>Member Management
+                </h2>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#memberModal">
+                    <i class="fas fa-user-plus me-2"></i>Add New Member
+                </button>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Filter by Family</label>
+                            <select class="form-select" id="familyFilter">
+                                <option value="">All Families</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Search by Name</label>
+                            <input type="text" class="form-control" id="searchInput" placeholder="Search members...">
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button class="btn btn-secondary w-100" onclick="loadMembers()">
+                                <i class="fas fa-sync-alt me-2"></i>Refresh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Members List -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-list me-2"></i>All Members</h5>
+                </div>
+                <div class="card-body" id="membersContainer">
+                    <div class="text-center text-muted">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                        <p class="mt-2">Loading members...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Member Registration Modal -->
+    <div class="modal fade" id="memberModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-user-plus me-2"></i>Add Family Member</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="memberForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Select Family</label>
+                                <select class="form-select" id="familySelect" name="family_id" required>
+                                    <option value="">Choose a family...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Full Name</label>
+                                <input type="text" class="form-control" name="name" placeholder="Enter full name" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Email Address</label>
+                                <input type="email" class="form-control" name="email" placeholder="email@example.com" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Phone Number</label>
+                                <input type="tel" class="form-control" name="phone" placeholder="+250 xxx xxx xxx" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Relationship</label>
+                            <select class="form-select" name="relationship" required>
+                                <option value="">Select relationship...</option>
+                                <option value="Father">Father</option>
+                                <option value="Mother">Mother</option>
+                                <option value="Son">Son</option>
+                                <option value="Daughter">Daughter</option>
+                                <option value="Brother">Brother</option>
+                                <option value="Sister">Sister</option>
+                                <option value="Grandfather">Grandfather</option>
+                                <option value="Grandmother">Grandmother</option>
+                                <option value="Uncle">Uncle</option>
+                                <option value="Aunt">Aunt</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-user-check me-2"></i>Add Member
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Member Modal -->
+    <div class="modal fade" id="editMemberModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Edit Member</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editMemberForm">
+                        <input type="hidden" name="member_id" id="editMemberId">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Select Family</label>
+                                <select class="form-select" id="editFamilySelect" name="family_id" required>
+                                    <option value="">Choose a family...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Full Name</label>
+                                <input type="text" class="form-control" id="editMemberName" name="name" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Email Address</label>
+                                <input type="email" class="form-control" id="editMemberEmail" name="email" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Phone Number</label>
+                                <input type="tel" class="form-control" id="editMemberPhone" name="phone" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Relationship</label>
+                            <select class="form-select" id="editMemberRelationship" name="relationship" required>
+                                <option value="">Select relationship...</option>
+                                <option value="Father">Father</option>
+                                <option value="Mother">Mother</option>
+                                <option value="Son">Son</option>
+                                <option value="Daughter">Daughter</option>
+                                <option value="Brother">Brother</option>
+                                <option value="Sister">Sister</option>
+                                <option value="Grandfather">Grandfather</option>
+                                <option value="Grandmother">Grandmother</option>
+                                <option value="Uncle">Uncle</option>
+                                <option value="Aunt">Aunt</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save me-2"></i>Update Member
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_URL = window.location.origin;
+        let allMembers = [];
+        let allFamilies = [];
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toastContainer = document.querySelector('.toast-container');
+            const toastId = 'toast_' + Date.now();
+            const icons = {
+                success: 'check-circle',
+                danger: 'exclamation-circle',
+                warning: 'exclamation-triangle',
+                info: 'info-circle'
+            };
+
+            const toastHTML = `
+                <div id="${toastId}" class="toast align-items-center text-white bg-${type} border-0" role="alert">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="fas fa-${icons[type]} me-2"></i>${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            `;
+
+            toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+            const toastElement = document.getElementById(toastId);
+            const toast = new bootstrap.Toast(toastElement, { delay: 4000 });
+            toast.show();
+
+            toastElement.addEventListener('hidden.bs.toast', () => toastElement.remove());
+        }
+
+        // Load families for dropdowns
+        async function loadFamilies() {
+            try {
+                const response = await fetch(`${API_URL}/families`);
+                allFamilies = await response.json();
+
+                const selects = [document.getElementById('familySelect'), document.getElementById('familyFilter'), document.getElementById('editFamilySelect')];
+
+                selects.forEach(select => {
+                    const isFilter = select.id === 'familyFilter';
+                    select.innerHTML = isFilter ? '<option value="">All Families</option>' : '<option value="">Choose a family...</option>';
+
+                    allFamilies.forEach(family => {
+                        const option = document.createElement('option');
+                        option.value = family.id;
+                        option.textContent = family.family_name;
+                        select.appendChild(option);
+                    });
+                });
+            } catch (error) {
+                showToast('Error loading families', 'danger');
+            }
+        }
+
+        // Load all members
+        async function loadMembers() {
+            const container = document.getElementById('membersContainer');
+            container.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin fa-2x"></i><p>Loading members...</p></div>';
+
+            try {
+                const response = await fetch(`${API_URL}/members`);
+                allMembers = await response.json();
+
+                displayMembers(allMembers);
+            } catch (error) {
+                container.innerHTML = '<div class="text-danger text-center">Error loading members</div>';
+                showToast('Error loading members', 'danger');
+            }
+        }
+
+        // Display members with filtering
+        function displayMembers(members) {
+            const container = document.getElementById('membersContainer');
+            const familyFilter = document.getElementById('familyFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            let filteredMembers = members;
+
+            if (familyFilter) {
+                filteredMembers = filteredMembers.filter(m => m.family_id == familyFilter);
+            }
+
+            if (searchTerm) {
+                filteredMembers = filteredMembers.filter(m =>
+                    m.name.toLowerCase().includes(searchTerm) ||
+                    m.email.toLowerCase().includes(searchTerm) ||
+                    m.relationship.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            if (filteredMembers.length === 0) {
+                container.innerHTML = '<div class="text-center text-muted"><i class="fas fa-inbox fa-3x mb-3"></i><p>No members found</p></div>';
+                return;
+            }
+
+            container.innerHTML = filteredMembers.map(member => {
+                const family = allFamilies.find(f => f.id == member.family_id);
+                const familyName = family ? family.family_name : 'Unknown Family';
+
+                return `
+                    <div class="member-card card mb-3 p-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">${member.name}</h5>
+                                    <small class="text-muted">
+                                        <i class="fas fa-home me-1"></i>${familyName} |
+                                        <i class="fas fa-tag me-1"></i>${member.relationship}
+                                    </small>
+                                    <div class="mt-1">
+                                        <small><i class="fas fa-envelope me-1"></i>${member.email}</small><br>
+                                        <small><i class="fas fa-phone me-1"></i>${member.phone}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-outline-primary" onclick="editMember(${member.id})">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="deleteMember(${member.id}, '${member.name}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Edit member
+        async function editMember(id) {
+            try {
+                const response = await fetch(`${API_URL}/members/${id}`);
+                const member = await response.json();
+
+                document.getElementById('editMemberId').value = member.id;
+                document.getElementById('editFamilySelect').value = member.family_id;
+                document.getElementById('editMemberName').value = member.name;
+                document.getElementById('editMemberEmail').value = member.email;
+                document.getElementById('editMemberPhone').value = member.phone;
+                document.getElementById('editMemberRelationship').value = member.relationship;
+
+                const modal = new bootstrap.Modal(document.getElementById('editMemberModal'));
+                modal.show();
+            } catch (error) {
+                showToast('Error loading member details', 'danger');
+            }
+        }
+
+        // Delete member
+        async function deleteMember(id, name) {
+            if (!confirm(`Are you sure you want to delete "${name}"? This action cannot be undone.`)) return;
+
+            try {
+                const response = await fetch(`${API_URL}/members/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    showToast('Member deleted successfully', 'success');
+                    loadMembers();
+                } else {
+                    throw new Error('Failed to delete member');
+                }
+            } catch (error) {
+                showToast('Error deleting member', 'danger');
+            }
+        }
+
+        // Form handlers
+        document.getElementById('memberForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            try {
+                const response = await fetch(`${API_URL}/members`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        family_id: formData.get('family_id'),
+                        name: formData.get('name'),
+                        email: formData.get('email'),
+                        phone: formData.get('phone'),
+                        relationship: formData.get('relationship')
+                    })
+                });
+
+                if (response.ok) {
+                    showToast('Member added successfully!', 'success');
+                    e.target.reset();
+                    loadMembers();
+                    bootstrap.Modal.getInstance(document.getElementById('memberModal')).hide();
+                } else {
+                    throw new Error('Failed to add member');
+                }
+            } catch (error) {
+                showToast('Error: ' + error.message, 'danger');
+            }
+        });
+
+        document.getElementById('editMemberForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const memberId = formData.get('member_id');
+
+            try {
+                const response = await fetch(`${API_URL}/members/${memberId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: formData.get('name'),
+                        email: formData.get('email'),
+                        phone: formData.get('phone'),
+                        relationship: formData.get('relationship')
+                    })
+                });
+
+                if (response.ok) {
+                    showToast('Member updated successfully!', 'success');
+                    loadMembers();
+                    bootstrap.Modal.getInstance(document.getElementById('editMemberModal')).hide();
+                } else {
+                    throw new Error('Failed to update member');
+                }
+            } catch (error) {
+                showToast('Error: ' + error.message, 'danger');
+            }
+        });
+
+        // Event listeners
+        document.getElementById('familyFilter').addEventListener('change', () => displayMembers(allMembers));
+        document.getElementById('searchInput').addEventListener('input', () => displayMembers(allMembers));
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFamilies();
+            loadMembers();
+        });
+    </script>
+</body>
+</html>

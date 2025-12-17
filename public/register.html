@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - DUHIGURE MU MIRYANGO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1b5e20 0%, #4caf50 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .register-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+        }
+        .btn-primary {
+            background-color: #4caf50;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #1b5e20;
+        }
+        .btn-outline-primary {
+            border-color: #4caf50;
+            color: #4caf50;
+        }
+        .btn-outline-primary:hover {
+            background-color: #4caf50;
+            border-color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-card">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-success">DUHIGURE MU MIRYANGO</h2>
+            <p class="text-muted">Create Your Account</p>
+        </div>
+
+        <form id="registerForm">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">First Name</label>
+                    <input type="text" class="form-control form-control-lg" name="firstname" placeholder="Enter first name" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">Last Name</label>
+                    <input type="text" class="form-control form-control-lg" name="lastname" placeholder="Enter last name" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Username</label>
+                <input type="text" class="form-control form-control-lg" name="username" placeholder="Choose username" required>
+                <div class="form-text">This will be your login username</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Email Address</label>
+                <input type="email" class="form-control form-control-lg" name="email" placeholder="Enter email address" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Phone Number</label>
+                <input type="tel" class="form-control form-control-lg" name="phone" placeholder="Enter phone number" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Password</label>
+                <input type="password" class="form-control form-control-lg" name="password" placeholder="Choose password" required>
+                <div class="form-text">Password must be at least 6 characters long</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Confirm Password</label>
+                <input type="password" class="form-control form-control-lg" name="confirmPassword" placeholder="Confirm password" required>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                <label class="form-check-label" for="termsCheck">
+                    I agree to the <a href="#" class="text-decoration-none">Terms of Service</a> and <a href="#" class="text-decoration-none">Privacy Policy</a>
+                </label>
+            </div>
+
+            <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-primary btn-lg">Create Account</button>
+            </div>
+
+            <div class="text-center">
+                <span class="text-muted">Already have an account? </span>
+                <a href="login.html" class="text-decoration-none">Sign In</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to get users from localStorage
+        function getUsers() {
+            const users = localStorage.getItem('duhigure_users');
+            return users ? JSON.parse(users) : [];
+        }
+
+        // Function to save users to localStorage
+        function saveUsers(users) {
+            localStorage.setItem('duhigure_users', JSON.stringify(users));
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const userData = {
+                firstname: formData.get('firstname').trim(),
+                lastname: formData.get('lastname').trim(),
+                username: formData.get('username').trim().toLowerCase(),
+                email: formData.get('email').trim().toLowerCase(),
+                phone: formData.get('phone').trim(),
+                password: formData.get('password'),
+                confirmPassword: formData.get('confirmPassword'),
+                createdAt: new Date().toISOString()
+            };
+
+            // Validation
+            if (userData.password !== userData.confirmPassword) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Password Mismatch',
+                    text: 'Passwords do not match. Please try again.'
+                });
+                return;
+            }
+
+            if (userData.password.length < 6) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Password Too Short',
+                    text: 'Password must be at least 6 characters long.'
+                });
+                return;
+            }
+
+            // Check if username already exists
+            const users = getUsers();
+            const existingUser = users.find(user => user.username === userData.username);
+
+            if (existingUser) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Username Taken',
+                    text: 'This username is already taken. Please choose a different one.'
+                });
+                return;
+            }
+
+            // Check if email already exists
+            const existingEmail = users.find(user => user.email === userData.email);
+
+            if (existingEmail) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Email Already Registered',
+                    text: 'This email address is already registered. Please use a different email.'
+                });
+                return;
+            }
+
+            // Remove confirmPassword before saving
+            delete userData.confirmPassword;
+
+            // Save user
+            users.push(userData);
+            saveUsers(users);
+
+            // Success message
+            Swal.fire({
+                icon: 'success',
+                title: 'Account Created!',
+                text: 'Your account has been created successfully. You can now login.',
+                confirmButtonText: 'Go to Login'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'login.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

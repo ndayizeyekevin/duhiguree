@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: duhigure
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: duhigure
+  template:
+    metadata:
+      labels:
+        app: duhigure
+    spec:
+      containers:
+        - name: duhigure
+          image: duhigure:prod
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: db-storage
+              mountPath: /app/data
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: duhigure-db-pvc
