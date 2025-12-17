@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - DUHIGURE MU MIRYANGO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #1b5e20 0%, #4caf50 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        .navbar {
+            background-color: #1b5e20;
+        }
+        .btn-primary {
+            background-color: #4caf50;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #1b5e20;
+        }
+        .contact-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+        .email-bg {
+            background: linear-gradient(135deg, #4caf50 0%, #1b5e20 100%);
+        }
+        .phone-bg {
+            background: linear-gradient(135deg, #2196f3 0%, #0d47a1 100%);
+        }
+        .location-bg {
+            background: linear-gradient(135deg, #ff9800 0%, #e65100 100%);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="index.html">DUHIGURE MU MIRYANGO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#guide">Guide</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Access System</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-4">Contact Us</h1>
+            <p class="lead mb-4">Get in touch with the DUHIGURE MU MIRYANGO team</p>
+            <p class="mb-4">We're here to help you with any questions about the family performance contract system</p>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Contact Information -->
+                <div class="col-lg-6 mb-5">
+                    <h2 class="mb-4">Get In Touch</h2>
+                    <p class="mb-4">Have questions about DUHIGURE MU MIRYANGO? Need assistance with the system? Our team is ready to help you.</p>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="contact-card card p-4 text-center">
+                                <div class="contact-icon email-bg text-white">
+                                    <i class="fas fa-envelope fa-2x"></i>
+                                </div>
+                                <h5>Email Us</h5>
+                                <p class="text-muted">support@duhigure.rw</p>
+                                <a href="mailto:support@duhigure.rw" class="btn btn-primary btn-sm">Send Email</a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="contact-card card p-4 text-center">
+                                <div class="contact-icon phone-bg text-white">
+                                    <i class="fas fa-phone fa-2x"></i>
+                                </div>
+                                <h5>Call Us</h5>
+                                <p class="text-muted">+250 788 123 456</p>
+                                <a href="tel:+250788123456" class="btn btn-primary btn-sm">Call Now</a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="contact-card card p-4 text-center">
+                                <div class="contact-icon location-bg text-white">
+                                    <i class="fas fa-map-marker-alt fa-2x"></i>
+                                </div>
+                                <h5>Visit Us</h5>
+                                <p class="text-muted">Kibungo Sector<br>Rwanda</p>
+                                <button class="btn btn-primary btn-sm" disabled>Get Directions</button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="contact-card card p-4 text-center">
+                                <div class="contact-icon" style="background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); color: white;">
+                                    <i class="fas fa-clock fa-2x"></i>
+                                </div>
+                                <h5>Office Hours</h5>
+                                <p class="text-muted">Mon - Fri: 8:00 AM - 5:00 PM<br>Sat: 9:00 AM - 12:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="col-lg-6">
+                    <div class="card p-4 bg-dark text-white">
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName" class="form-label">First Name *</label>
+                                    <input type="text" class="form-control" id="firstName" name="firstName" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName" class="form-label">Last Name *</label>
+                                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" name="phone">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Subject *</label>
+                                <select class="form-select" id="subject" name="subject" required>
+                                    <option value="">Choose a subject</option>
+                                    <option value="technical">Technical Support</option>
+                                    <option value="registration">Registration Help</option>
+                                    <option value="feedback">Feedback</option>
+                                    <option value="partnership">Partnership Inquiry</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message *</label>
+                                <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Help Resources Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Help Resources</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="fas fa-question-circle fa-3x text-primary mb-3"></i>
+                            <h5>Frequently Asked Questions</h5>
+                            <p>Find answers to common questions about DUHIGURE MU MIRYANGO</p>
+                            <a href="#" class="btn btn-outline-primary">View FAQ</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="fas fa-book fa-3x text-success mb-3"></i>
+                            <h5>User Guide</h5>
+                            <p>Step-by-step guide to using the DUHIGURE MU MIRYANGO system</p>
+                            <a href="index.html#guide" class="btn btn-outline-primary">Read Guide</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="fas fa-users fa-3x text-info mb-3"></i>
+                            <h5>Community Support</h5>
+                            <p>Connect with other users and get help from the community</p>
+                            <a href="#" class="btn btn-outline-primary">Join Community</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Map Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Our Location</h2>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.835434509374!2d30.543285!3d-2.148523!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2809434099195449344!2zMsKwMDgnNTQuNyJTIDMwwrAzMic0My4yIkU!5e0!3m2!1sen!2srw!4v1234567890!5m2!1sen!2srw" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>DUHIGURE MU MIRYANGO</h5>
+                    <p>Family-Level Performance Contract System for Kibungo Sector</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">Home</a></li>
+                        <li><a href="index.html#about" class="text-white">About</a></li>
+                        <li><a href="index.html#features" class="text-white">Features</a></li>
+                        <li><a href="index.html#guide" class="text-white">Guide</a></li>
+                        <li><a href="contact.html" class="text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Support</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="mailto:support@duhigure.rw" class="text-white">Email Support</a></li>
+                        <li><a href="tel:+250788123456" class="text-white">Phone: +250 788 123 456</a></li>
+                        <li><a href="https://www.facebook.com/ndayizeye.sanchez" target="_blank" class="text-white">Facebook</a></li>
+                        <li><a href="https://twitter.com/ndayizeye_kevin" target="_blank" class="text-white">Twitter</a></li>
+                        <li><a href="https://instagram.com/kevin_ndayizeye" target="_blank" class="text-white">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-3">
+            <div class="text-center">
+                <p>&copy; 2025 DUHIGURE MU MIRYANGO - Kibungo Sector. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Basic form validation
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+
+            // Simple validation
+            if (!data.firstName || !data.lastName || !data.email || !data.subject || !data.message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Here you would typically send the data to your server
+            alert('Thank you for your message! We will get back to you soon.');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>

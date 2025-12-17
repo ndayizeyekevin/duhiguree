@@ -69,8 +69,8 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="index.html">
-                <i class="fas fa-users me-2"></i>DUHIGURE MU MIRYANGO
+            <a class="navbar-brand fw-bold ms-3" href="index.html">
+                DUHIGURE MU MIRYANGO
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,7 +120,7 @@
                                 <i class="fas fa-sync-alt me-2"></i>Refresh Data
                             </a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="#" onclick="logout()">
+                            <li><a class="dropdown-item text-danger" href="./" onclick="logout()">
                                 <i class="fas fa-sign-out-alt me-2"></i>Logout
                             </a></li>
                         </ul>
@@ -391,6 +391,15 @@
             </div>
         </div>
     </div>
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            
+            <hr class="my-3">
+            <div class="text-center">
+                <p>&copy; 2025 DUHIGURE MU MIRYANGO - Kibungo Sector. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -650,11 +659,131 @@
             }
         }
 
+        // Form validation functions
+        function validateFamilyForm(form) {
+            const familyName = form.family_name.value.trim();
+
+            if (!familyName) {
+                showToast('Family name is required', 'warning');
+                return false;
+            }
+
+            if (familyName.length < 2) {
+                showToast('Family name must be at least 2 characters long', 'warning');
+                return false;
+            }
+
+            if (familyName.length > 100) {
+                showToast('Family name must be less than 100 characters', 'warning');
+                return false;
+            }
+
+            // Check for special characters that might cause issues
+            const specialChars = /[<>\"'&]/;
+            if (specialChars.test(familyName)) {
+                showToast('Family name contains invalid characters', 'warning');
+                return false;
+            }
+
+            return true;
+        }
+
+        function validateMemberForm(form) {
+            const name = form.name.value.trim();
+            const email = form.email.value.trim();
+            const phone = form.phone.value.trim();
+            const familyId = form.family_id.value;
+            const relationship = form.relationship.value;
+
+            if (!familyId) {
+                showToast('Please select a family', 'warning');
+                return false;
+            }
+
+            if (!name) {
+                showToast('Full name is required', 'warning');
+                return false;
+            }
+
+            if (name.length < 2) {
+                showToast('Name must be at least 2 characters long', 'warning');
+                return false;
+            }
+
+            if (name.length > 100) {
+                showToast('Name must be less than 100 characters', 'warning');
+                return false;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email) {
+                showToast('Email address is required', 'warning');
+                return false;
+            }
+
+            if (!emailRegex.test(email)) {
+                showToast('Please enter a valid email address', 'warning');
+                return false;
+            }
+
+            // Phone validation (Rwanda format)
+            const phoneRegex = /^(\+250|0)[0-9]{8,9}$/;
+            if (!phone) {
+                showToast('Phone number is required', 'warning');
+                return false;
+            }
+
+            if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
+                showToast('Please enter a valid Rwandan phone number (+250xxxxxxxxx or 0xxxxxxxxx)', 'warning');
+                return false;
+            }
+
+            if (!relationship) {
+                showToast('Please select a relationship', 'warning');
+                return false;
+            }
+
+            return true;
+        }
+
+        function validateDutyForm(form) {
+            const familyId = form.family_id.value;
+            const duty = form.duty.value.trim();
+
+            if (!familyId) {
+                showToast('Please select a family', 'warning');
+                return false;
+            }
+
+            if (!duty) {
+                showToast('Duty description is required', 'warning');
+                return false;
+            }
+
+            if (duty.length < 10) {
+                showToast('Duty description must be at least 10 characters long', 'warning');
+                return false;
+            }
+
+            if (duty.length > 500) {
+                showToast('Duty description must be less than 500 characters', 'warning');
+                return false;
+            }
+
+            return true;
+        }
+
         // Form handlers
         document.getElementById('familyForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            if (!validateFamilyForm(e.target)) {
+                return;
+            }
+
             const formData = new FormData(e.target);
-            
+
             try {
                 const response = await fetch(`${API_URL}/families`, {
                     method: 'POST',
@@ -711,8 +840,13 @@
 
         document.getElementById('dutyForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            if (!validateDutyForm(e.target)) {
+                return;
+            }
+
             const formData = new FormData(e.target);
-            
+
             try {
                 const response = await fetch(`${API_URL}/duties`, {
                     method: 'POST',
