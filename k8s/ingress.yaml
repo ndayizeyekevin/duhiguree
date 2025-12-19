@@ -16,3 +16,4 @@ spec:
             name: duhigure-service
             port:
               number: 80
+              

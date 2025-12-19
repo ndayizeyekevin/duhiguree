@@ -25,3 +25,4 @@ spec:
         - name: db-storage
           persistentVolumeClaim:
             claimName: duhigure-db-pvc
+

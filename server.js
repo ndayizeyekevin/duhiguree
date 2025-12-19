@@ -29,6 +29,7 @@ db.serialize(() => {
         sector TEXT NOT NULL DEFAULT 'Kibungo'
     )`);
 
+    
     db.run(`CREATE TABLE IF NOT EXISTS members (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         family_id INTEGER NOT NULL,
